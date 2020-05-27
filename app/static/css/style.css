@@ -1,0 +1,10 @@
+.nav-item img {
+    height: auto;
+    width: 2.1rem;
+  }
+
+.center-right {
+    position: absolute;
+    right: 1rem;
+    top: 1rem !important;
+}

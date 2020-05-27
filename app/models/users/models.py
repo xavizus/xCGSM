@@ -29,7 +29,7 @@ class User(db.Model):
     updated_date = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return f'<User {self.username}>'
 
     def get_id(self):
         return self.id

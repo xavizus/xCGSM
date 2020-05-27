@@ -18,23 +18,25 @@ def login():
 
 
 @login_bp.route('/create')
-@login_required
 def createUser():
-    user1 = Users.User(
-        username="admin",
-        email="admin@localhost",
-        pw_hash="123456789abc"
-    )
-    # Creates new role
-    # role = Users.Role(name="admin")
+    try:
+        user1 = Users.User(
+            username="admin",
+            email="admin@localhost",
+            pw_hash="123456789abc"
+        )
+        # Creates new role
+        # role = Users.Role(name="admin")
 
-    # Use existing role to assign to user
-    role = db.session.query(Users.Role)\
-        .filter(Users.Role.name == 'admin')\
-        .first()
-    role.users.append(user1)
-    db.session.add(role)
-    db.session.commit()
+        # Use existing role to assign to user
+        role = db.session.query(Users.Role)\
+            .filter(Users.Role.name == 'admin')\
+            .first()
+        role.users.append(user1)
+        db.session.add(role)
+        db.session.commit()
+    except:
+        pass
 
     return "OK", 200
 

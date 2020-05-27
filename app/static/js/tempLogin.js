@@ -6,5 +6,5 @@ $(() => {
 });
 
 function signin(event) {
-    window.location.href = `${url}/create`;
+    window.location.href = `${url}/admin`;
 }

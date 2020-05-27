@@ -1,9 +1,8 @@
-{% set appName = data.appName if data and data.appName else "appName missing in data" %}
+{% set appName = applicationData.appName if applicationData and applicationData.appName else "appName missing in data" %}
 {% set contentTitle = data.contentTitle if data and data.contentTitle else "contentTitle missing in data" %}
 {% set subContentTitle = data.subContentTitle if data and data.subContentTitle else "" %}
 {% set cardTitle = data.cardTitle if data and data.cardTitle else "cardTitle missing in data" %}
 {% set cardStyle = data.cardStyle if data and data.cardStyle else "card-default" %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +14,7 @@
         <script src="{{ url_for('static', filename='js/adminlte.js')}}"></script>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/all.min.css')}}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/adminlte.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
         <title>{% block title %}{{appName}}{% endblock %}</title>
     {% endblock %}
 </head>
@@ -28,6 +28,7 @@
         <li class="nav-item">
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
+
       </ul>
   
       <!-- Right navbar links -->
@@ -50,15 +51,37 @@
       <!-- Sidebar -->
       <div class="sidebar">
         <!-- Sidebar Menu -->
+          <ul class="nav nav-pills nav-sidebar flex-column mt-2" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item has-treeview {{'menu-open' if uploadActive else ''}}">
+              <a href="#" class="nav-link {{'active' if uploadActive else ''}}">
+                  <img src="{{url_for('static', filename='images/avatars/default_avatar.gif')}}" alt="" class="img-circle elevation-2">
+                <p style="vertical-align: middle;">
+                {{data.username.capitalize()}}
+                <i class="center-right right fas fa-angle-left"></i>
+              </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/logout" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                      Logout
+                    </p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          
+          </ul>
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
+                 
                  <li class="nav-header">
                    General
                  </li>
                  <li class="nav-item">
-                   <a href="{{url_for('admin', _external=True)}}" class="nav-link {{'active' if dashboardActive else ''}}">
+                   <a href="{{url_for('admin.dashboard', _external=True)}}" class="nav-link {{'active' if dashboardActive else ''}}">
                      <i class="nav-icon fas fa-tachometer-alt"></i>
                      <p>
                        Dashboard
@@ -83,23 +106,13 @@
                   </a>
                   <ul class="nav nav-treeview">
                     <li class="nav-item">
-                      <a href="{{ url_for('uploadSTB', _external=True) }}" class="nav-link {{'active' if uploadType and uploadType == 'stb' else ''}}">
+                      <a href="" class="nav-link {{'active' if uploadType and uploadType == 'stb' else ''}}">
                         <i class="far fa-circle nav-icon"></i>
                         <p>
                           STB
                         </p>
                       </a>
                     </li>
-                    <!--
-                    <li class="nav-item">
-                      <a href="{{ url_for('uploadCPE', _external=True) }}" class="nav-link {{'active' if uploadType and uploadType == 'cpe' else ''}}">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>
-                          CPE
-                        </p>
-                      </a>
-                    </li>
-                    -->
                   </ul>
                 </li>
           </ul>
@@ -166,7 +179,7 @@
     <!-- Main Footer -->
     <footer class="main-footer">
       <!-- Default to the left -->
-      <strong>Copyright &copy;  <a href="{{url_for('login', _external=True)}}">{{appName}}</a>.</strong> All rights reserved.
+      <strong>Copyright &copy;  <a href="{{url_for('login.login', _external=True)}}">{{appName}}</a>.</strong> All rights reserved.
     </footer>
   </div>
   <!-- ./wrapper -->
