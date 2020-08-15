@@ -9,11 +9,12 @@ login_bp = Blueprint('login', __name__)
 @login_bp.route('/')
 @login_bp.route('/login', methods=['GET', 'POST'])
 def login():
-    admin = db.session.query(Users.User)\
-        .filter(Users.User.id == 1)\
+    user = db.session.query(Users.User)\
+        .filter(Users.User.username == "admin1")\
         .first()
-    if admin:
-        login_user(admin)
+    if user:
+        if user.verify_password('123456789abc'):
+            login_user(user)
     return render_template('login.html')
 
 
@@ -21,9 +22,9 @@ def login():
 def createUser():
     try:
         user1 = Users.User(
-            username="admin",
-            email="admin@localhost",
-            pw_hash="123456789abc"
+            username="admin1",
+            email="admin1@localhost",
+            password="123456789abc"
         )
         # Creates new role
         # role = Users.Role(name="admin")
@@ -35,8 +36,8 @@ def createUser():
         role.users.append(user1)
         db.session.add(role)
         db.session.commit()
-    except:
-        pass
+    except Exception as error:
+        print(error)
 
     return "OK", 200
 
